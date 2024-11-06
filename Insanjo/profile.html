@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet">
+    <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.css" type="text/css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.2/css/fontawesome.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/hammerjs@2.0.8/hammer.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="icon" href="images/favicon.png" type="image/png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.css" type="text/css">
+    <link rel="stylesheet" href="css/design.css">
+    <title>Manage Account</title>
+</head>
+<body>
+    <div class="profile-container">
+        <!-- Sidebar Section -->
+        <div class="left-side">
+            <div class="corner">
+                <a onclick="goHome(); return false">
+                    <div class="logo">
+                        <h2><b class="color2">Insanj</b></h2>
+                        <img src="images/logoBox.png">
+                    </div>
+                </a>
+            </div>
+            <script>
+                function goHome(){
+                    window.location.href = "index.html";
+                }
+            </script>
+        </div>
+
+        <div class="center">
+            <br><br>
+            <h1>Manage Account</h1>
+            <br><br>
+            <div class="settings">
+                <div class="settings2">
+                    <form action="POST">
+                        <div class="twoIcon">
+                            <div>
+                                <h2 class="proHead" id="profile">Profile</h2>    
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="user-profile" style="margin-left: 0; padding: 0;">
+                            <div class="profile_image">
+                                <input type="file" class="image_file" id="uploadInput" onchange="updateImage()">
+                            </div>
+                        </div>
+                        <br><br>
+                        <div class="profile-input">
+                            <div class="editable-field" id="nameField1">
+                                <span class="material-icons-sharp" style="margin-right: 10px;">account_circle</span>
+                                <div class="field-content">
+                                    <input type="text" class="field-input" required="true" maxlength="20" placeholder="Create a username:" disabled/>
+                                </div>
+                                <span class="material-icons-sharp edit-icon" onclick="toggleEditMode('nameField1')">edit</span>
+                                <span class="material-icons-sharp save-icon" onclick="saveEdit('nameField1')">done</span>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="profile-input">
+                            <div class="editable-field" id="nameField2">
+                                <span class="material-icons-sharp" style="margin-right: 10px;">work</span>
+                                <div class="field-content">
+                                    <input type="text" class="field-input" maxlength="25" required placeholder="Job Description:" disabled/>
+                                </div>
+                                <span class="material-icons-sharp edit-icon" onclick="toggleEditMode('nameField2')">edit</span>
+                                <span class="material-icons-sharp save-icon" onclick="saveEdit('nameField2')">done</span>
+                            </div>
+                        </div>
+                        <br><br>
+                    </form>
+                </div>
+            </div>
+            <div class="settings">
+                <div class="settings2">
+                    <form action="POST">
+                        <div class="twoIcon">
+                            <div>
+                                <h2 class="proHead" id="businessPro">Business Profile</h2>    
+                            </div>
+                        </div>
+                        <hr>
+                        <br>
+                        <div class="profile-input">
+                            <input type="text" id="businessName" name="businessName" class="input xy-input" required placeholder="Enter your business name">
+                            <label for="businessName" class="profile-input_label">Business Name:</label>
+                        </div>
+                        <br>
+                        <div class="profile-input">
+                            <input type="text" id="business_address" name="business_address" class="input xy-input" required placeholder="Enter your Job Title">
+                            <label for="business_address" class="profile-input_label">Business Address:</label>
+                        </div>
+                        <br>
+                        <div class="profile-input">
+                            <input type="email" id="email" name="email" class="input xy-input" pattern="^[A-Za-z0-9](([_\.\-]?[a-zA-Z0-9]+)*)@([A-Za-z0-9]+)(([\.\-]?[a-zA-Z0-9]+)*)\.([A-Za-z]{2,})$" required placeholder="Enter your Email">
+                            <label for="email" class="profile-input_label">Email:</label>
+                        </div>
+                        <br>
+                        <div class="profile-input">
+                            <input type="number" id="phone" name="businessName" class="input xy-input" placeholder="0800 000 0000" required="true" value="" maxlength="17" regexp="^[0-9\-\+\(\)\s]{0,17}$">
+                            <label for="phone" class="profile-input_label">Phone:</label>
+                        </div>
+                        <br><br>
+                        <div class="update">
+                            <button class="upProfile">Save Changes</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="settings">
+                <div class="settings2">
+                    <form action="POST">
+                        <div class="twoIcon">
+                            <div>
+                                <h2 class="proHead" id="account">Account</h2>    
+                            </div>
+                        </div>
+                            <hr>
+                            <br>
+                            <div class="profile-input">
+                                <div>
+                                    <label for="timezoneSelect">Timezones:</label>
+                                <select id="timezoneSelect"></select>
+                                </div>
+                                <div class="profile-toggle">
+                                    <label class="switch">
+                                        <input type="checkbox" id="timezoneToggle" checked>
+                                        <span class="slider"></span>
+                                    </label>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="profile-input">
+                                <div>
+                                    <label for="currencySelect" style="margin-right: 8px;">Currency:</label>
+                                    <select id="currencySelect"></select>
+                                </div>
+                                <div class="profile-toggle">
+                                    <label class="switch">
+                                        <input type="checkbox" id="currencyToggle">
+                                        <span class="slider"></span>
+                                    </label>
+                                </div>
+                            </div>
+                            <br><br>
+                    </form>
+                </div>
+            </div>
+            <div class="settings">
+                <div class="settings2">
+                    <div class="twoIcon">
+                        <div>
+                            <h2 class="proHead" id="notifications">Notifications</h2>    
+                        </div>
+                    </div>
+                        <hr>
+                        <br>
+                    <div class="profile-input">
+                        <span>Analysis Pop-up</span>
+                        <div class="profile-toggle">
+                            <label class="switch">
+                                <input type="checkbox">
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="profile-input">
+                        <span>Away Notification</span>
+                        <div class="profile-toggle">
+                            <label class="switch">
+                                <input type="checkbox" checked>
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                    </div>
+                    <br><br>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Section -->
+        <div class="right-side">
+            <div class="nav">
+                <div class="right-corner">
+                    <a onclick="goHome(); return false">
+                        <div class="logo">
+                            <h2><b class="color2">Insanj</b></h2>
+                            <img src="images/logoBox.png">
+                        </div>
+                    </a>
+                </div>
+                <div class="menus">
+                    <button class="hideBar">
+                        <span class="fa fa-times hamburger activate"></span>
+                    </button>
+                    <button class="showBar">
+                        <span class="fa fa-bars bars"></span>
+                    </button>
+                </div>
+                <div class="innerNav">            
+                    <div class="dark-mode">
+                        <div class="ico">
+                            <span class="material-icons-sharp active">light_mode</span>
+                            <span class="material-icons-sharp">dark_mode</span>
+                        </div>
+                        <div class="ico-letters">
+                            <h3>Themes</h3>
+                        </div>
+                    </div>
+                    <hr class="lines" style="order: 1;">
+                    <div class="inventory" onclick="openInventory(); return false">
+                        <div class="ico">
+                            <span class="material-icons-sharp" style="color: #1B9C85;">library_books</span>
+                        </div>
+                        <div class="ico-letters">
+                            <h3>Inventory</h3>
+                            <span class="text">Monitor your business inventory</span>
+                        </div>
+                    </div>
+                    <hr class="lines">
+                    <script>
+                        function openInventory(){
+                            window.location.href = 'inventory.html';
+                        }
+                    </script>
+                    <div class="notify">
+                        <div class="ico">
+                            <span class="material-icons-sharp" style="color: #1B9C85;">notifications</span>
+                        </div>
+                        <div class="ico-letters">
+                            <h3>Notification</h3>
+                            <span id="alert"></span>
+                        </div>
+                    </div>
+                    <hr class="lines">
+                    <div class="predictor">
+                        <div class="ico">
+                            <span class="material-icons-sharp" style="color: #c440a7;">online_prediction</span>
+                        </div>
+                        <div class="ico-letters">
+                            <h3>Predictive Analysis</h3>
+                            <span class="text">Forecast future sales and scenarios</span>
+                        </div>
+                    </div>
+                    <hr class="lines">
+                    <div class="copy-write">
+                        <h5>2024 Copyright: Lechi-Tech</h5>
+                    </div>
+                </div>
+            
+                <div class="profile">
+                    <div class="about">
+                        <p>Hey, <b>Lechi</b></p>
+                        <small class="admin">Admin</small>
+                    </div>
+                    <div class="displayPic usersDetails">
+                        <img src="images/blank-person-icon-9.jpg">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="details usersDetails">
+                <div class="user-profile">
+                    <div class="profile_image">
+                        <input type="file" class="image_file" >
+                    </div>
+                    <div class="profile_names" style="margin-top: 10px;">
+                        <h2>Administrator</h2>
+                        <p>Admin</p>
+                    </div>
+                </div>
+                <div class="sidebar">
+                    <a href="#" onclick="goHome(); return false">
+                        <span class="material-icons-sharp">home</span>
+                        <h3>Home</h3>
+                    </a>
+                    <a href="#profile">
+                        <span class="material-icons-sharp">
+                            account_circle</span>
+                        <h3>Profile</h3>
+                    </a>
+                    <a href="#businessPro">
+                        <span class="material-icons-sharp">business</span>
+                        <h3>Business Profile</h3>
+                    </a>
+                    <a href="#account">
+                        <span class="material-icons-sharp">manage_accounts</span>
+                        <h3>Account</h3>
+                    </a>
+                    <a href="#notifications">
+                        <span class="material-icons-sharp">notifications</span>
+                        <h3>Notifications</h3>
+                    </a>
+                    <a href="#">
+                        <span class="material-icons-sharp">logout</span>
+                        <h3>Logout</h3>
+                    </a>
+                    <script>
+                        function openProfile(){
+                            window.location.href = 'profile.html';
+                        }
+                        function goHome(){
+                            window.location.href = "index.html";
+                        }
+                    </script>
+                </div>
+            </div>
+            <!-- End of Nav -->
+        </div>
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                const displayPic = document.querySelector('.displayPic.usersDetails');
+                const details = document.querySelector('.details');
+    
+                displayPic.addEventListener('click', function (event) {
+                    details.classList.toggle('active');
+                    event.stopPropagation(); // Prevents the click event from propagating to document
+                });
+    
+                // Close details when clicking outside of it
+                document.addEventListener('click', function (event) {
+                    if (!details.contains(event.target) && !displayPic.contains(event.target)) {
+                        details.classList.remove('active');
+                    }
+                });
+            });
+        </script>
+        <script src="js/profile.js"></script>
+        <script src="js/dlMood.js"></script>
+        <script src="js/others.js"></script>
+
+        <div class="footer">
+            <div class="foot">
+                <nav class="footer-nav"> © 2024 Copyright: Lechi-Tech</a></nav>
+                <a href="#" class="footer-link"><img src="images/Lechi Logo.png" alt="logoImage"></a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

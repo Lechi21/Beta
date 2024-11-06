@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet">
+        <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.css" type="text/css">
+        <script src="https://cdn.jsdelivr.net/npm/hammerjs@2.0.8/hammer.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+        <link rel="stylesheet" href="css/design.css">
+        <link rel="icon" href="images/favicon.png" type="image/png">
+        <title>Insanjo</title>
+    </head>
+    <body>
+        <noscript>
+            <p>This website requires JavaScript. Please enable JavaScript in your browser.</p>
+        </noscript>
+        <div class="container">
+            <!-- Sidebar Section -->
+            <div class="left-side">
+                <div class="corner">
+                    <a onclick="goHome(); return false">
+                        <div class="logo">
+                            <h2><b class="color2">Insanj</b></h2>
+                            <img src="images/logoBox.png">
+                        </div>
+                    </a>
+                </div>
+                <script>
+                    function goHome(){
+                        window.location.href = "index.html";
+                    }
+                </script>
+            </div>
+
+            <div class="center">
+                <div id="notification" style="display: none; position: fixed; top: 20px; right: 20px; z-index: 9999; background-color: #f0c14b; padding: 10px; border-radius: 5px;">
+                    <span id="notification-message"></span>
+                </div>
+                <br><br>
+                <h1>Sales Charts</h1>
+                <!-- Analyses -->
+                <div class="analyses">
+                    <div class="sales">
+                        <div class="status">
+                            <div class="about">
+                                <h3>Daily Sales</h3>
+                                <h1 class="balance daily-balance"></h1>
+                                <i class="bx bx-show" onclick="toggleBalance()"></i>
+                            </div>
+                            <div class="semiCircle">
+                                <svg>
+                                    <circle cx="38" cy="38" r="36"></circle>
+                                </svg>
+                                <div class="percentage">
+                                    <p>+81%</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="visits">
+                        <div class="status">
+                            <div class="about">
+                                <h3>Weekly Sales</h3>
+                                <h1 class="balance weekly-balance"></h1>
+                                <i class="bx bx-show" onclick="toggleBalance()"></i>
+                            </div>
+                            <div class="semiCircle">
+                                <svg>
+                                    <circle cx="38" cy="38" r="36"></circle>
+                                </svg>
+                                <div class="percentage">
+                                    <p>+48%</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="searches">
+                        <div class="status">
+                            <div class="about">
+                                <h3>Monthly Sales</h3>
+                                <h1 class="balance monthly-balance"></h1>
+                                <i class="bx bx-show" onclick="toggleBalance()"></i>
+                            </div>
+                            <div class="semiCircle">
+                                <svg>
+                                    <circle cx="38" cy="38" r="36"></circle>
+                                </svg>
+                                <div class="percentage">
+                                    <p>+21%</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    // Load saved currency symbol from localStorage
+                        var savedCurrencySymbol = localStorage.getItem('selectedCurrency') || "";
+                        var originalBalance = "--";
+                        var hiddenBalance = "*****";
+                        var isBalanceHidden = localStorage.getItem('isBalanceHidden') === 'true';
+
+                        var balanceText = isBalanceHidden ? hiddenBalance : originalBalance;
+                        var iconText = isBalanceHidden ? " Show Record" : " Hide Record";
+
+                        var balanceElements = document.getElementsByClassName("balance");
+                        var iconElements = document.getElementsByClassName("bx");
+
+                        // Update the balance and icon elements with the currency symbol
+                        for (var i = 0; i < balanceElements.length; i++) {
+                            balanceElements[i].textContent = savedCurrencySymbol + balanceText;
+                            iconElements[i].textContent = iconText;
+                        }
+
+                        function toggleBalance() {
+                            for (var i = 0; i < balanceElements.length; i++) {
+                                if (isBalanceHidden) {
+                                    balanceElements[i].textContent = savedCurrencySymbol + originalBalance;
+                                    iconElements[i].textContent = " Hide Record";
+                                } else {
+                                    balanceElements[i].textContent = savedCurrencySymbol + hiddenBalance;
+                                    iconElements[i].textContent = " Show Record";
+                                }
+                            }
+                            isBalanceHidden = !isBalanceHidden;
+                            localStorage.setItem('isBalanceHidden', isBalanceHidden);
+                        }
+
+                        // Add event listeners to all the toggle icons
+                        for (var i = 0; i < iconElements.length; i++) {
+                            iconElements[i].addEventListener('click', toggleBalance);
+                        }
+
+                        // Set initial state if balance is hidden
+                        if (isBalanceHidden) {
+                            toggleBalance();
+                        }
+                    });
+                </script>
+                <br><br>
+                <div class="allSwipe">
+                    <div class="swipeTab">
+                        <label class="arrowLeft-Right" onclick="goLeft()">
+                            <i class="fa fa-arrow-circle-left fa-2x" aria-hidden="true"></i>
+                        </label>
+                    </div>
+                    <div class="swipeTab">
+                        <button class="tablinks" onclick="openTab(event, 'Tab1')"></button>
+                        <button class="tablinks" name="Tab2" onclick="openTab(event, 'Tab2')" id="defaultOpen"></button>
+                        <button class="tablinks" onclick="openTab(event, 'Tab3')"></button>
+                    </div>
+                    <div class="swipeTab">
+                        <label class="arrowLeft-Right" onclick="goRight()">
+                            <i class="fa fa-arrow-circle-right fa-2x" aria-hidden="true"></i>
+                        </label>
+                    </div>
+                </div>
+                <br>
+
+                <div class="swipe-container">
+                    <!-- Daily Sales Table -->
+                    <div style="cursor: pointer;" class="salesRecord tabcontent hidden" id="Tab2">
+                        <h2>Daily Stock Sales</h2>
+                        <div class="side">
+                            <p style="margin-bottom: 10px;" class="predicting">Select add to input today's record.</p>
+                            <div class="sides">
+                                <button class="add-sales" onclick="addItems(); return false">Add Sales</button>
+                                <button class="return-sales" onclick="ReturnItems(); return false">Return Sales</button>
+                            </div>
+                        </div>
+                        <table class="stock-sales">
+                            <thead>
+                                <tr>
+                                    <th>S/N</th>
+                                    <th>Items Sold</th>
+                                    <th>Qty</th>
+                                    <th>Amount</th>
+                                </tr>
+                            </thead>
+                            <tbody id="salesTableBody"></tbody>
+                        </table>
+                        <!-- Pagination controls -->
+                        <div class="pagination-controls">
+                            <button id="prevPage" onclick="prevPage()">Previous</button>
+                            <span id="pageInfo">Page 1 of X</span>
+                            <button id="nextPage" onclick="nextPage()">Next</button>
+                        </div>
+                        <!-- 'Show All' button to reveal the rest of the rows and pagination -->
+                        <!-- <a id="showMoreButton" class="showmore" style="cursor: pointer;">Show All</a> -->
+                    </div>                    
+                    <script>
+                        function addItems(){
+                            window.location.href = 'preForm.html';
+                        }
+                    </script>
+
+                <!------------------- RETURN POP FORM STARTS HERE ------------------->
+                <div class="modal" id="returning-sales">
+                    <div class="return-container">
+                        <div class="return-header">
+                            <h2 class="return-h2">RETURN SALES</h2>
+                            <button id="closeReturn" type="button" onclick="closeReturn()" style="border-radius: 50%; background-color: var(background-color);">
+                                <i class="fa fa-times" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                        <div class="return-body">
+                            <div class="item-name1" style="margin-bottom: 20px; width: 50%;">
+                                <h4>Item Sold Date:</h4>
+                                <input type="date" id="saleDate" onchange="fetchSalesByDate()">
+                                <input type="hidden" id="saleId" value="" />
+                            </div>
+                            <div class="inputs tops">
+                                <div class="item-name2" style="flex-basis: 50%;">
+                                    <h4>Item Name:</h4>
+                                    <select id="soldItems" class="selector" onchange="fetchSalePrice(this.value)">
+                                        <option value="">Select Item</option>
+                                    </select>
+                                </div>
+                                <div class="item-name1 returner last-last" style="flex-basis: 16%;">
+                                    <h4>Quantity:</h4>
+                                    <input type="number" id="returnQuantity" placeholder="Enter quantity" oninput="calculateRefundAmount()">
+                                    <span id="quantityError" class="error-message"></span>
+                                </div>                                
+                            </div>
+                            <div class="inputs seconds">
+                                <div class="item-name1 returners-2 last-last">
+                                    <h4>Unit Price:</h4>
+                                    <input type="number" id="unitPrice" placeholder="100" readonly />
+                                </div>
+                                <div class="item-name1 returners-2 loss last-last">
+                                    <h4>Total Price:</h4>
+                                    <input type="number" id="totalPrice" placeholder="Total Cost" readonly />
+                                </div>
+                            </div>
+                            <br>
+                            <div class="input-place">
+                                <textarea cols="25" rows="5" placeholder="leave a note for returning Sales" id="txArea" style="border-radius: 5px; resize: vertical; height: 97px;" maxlength="1000"></textarea>
+                            </div>
+                        </div>
+                        <div class="return-footer">
+                            <button class="save-returns" type="button" onclick="processReturn()">Save</button>
+                            <button class="cancel-returns" type="button" onclick="closePopup();">Cancel</button>
+                        </div>
+                    </div>    
+                </div>
+                <!------------------- RETURN POP FORM ENDS HERE ------------------->
+                <!-- End of Daily Sales -->
+                <!-- Predictive Table -->
+                <div style="cursor: pointer;" class="salesRecord tabcontent hidden" id="Tab1">
+                    <h2>Predictive Analyses</h2>
+                    <div class="form2">
+                        <p class="predicting">Harness Predicting Power: Transform data into tomorrow's insights</p>
+                        <br>
+                        <div class="prediction-container">
+                            <div class="drop">
+                                <button class="drop-btn" id="simpleBtn">
+                                    Simple Prediction
+                                    <i class="fa fa-caret-down arrow"></i>
+                                </button>
+                                <div class="drop-content" id="simpleMessage">
+                                    <strong><p class="pHeader">Simple Prediction</p></strong>
+                                    <p class="pChild">Make quick and simple predictions with Insanjo predictive analysis tool. Get daily, weekly, monthly, and yearly future sales trends.
+                                    </p>
+                                </div>
+                                <div class="drop-cont" id="simpleList">
+                                    <ul>
+                                        <li>Daily</li>
+                                        <li>Weekly</li>
+                                        <li>Monthly</li>
+                                        <li>Yearly</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="drop">
+                                <button class="drop-btn" id="scenarioBtn">
+                                    Scenario Prediction
+                                    <i class="fa fa-caret-down arrow"></i>
+                                </button>
+                                <div class="drop-content" id="scenarioMessage">
+                                    <strong><p class="pHeader">Scenario Prediction</p></strong>
+                                    <p class="pChild">Make predictions based on scenario and possible events around your business. Know how change impacts your Sales.
+                                    </p>
+                                </div>
+                                <div class="drop-cont" id="scenarioList">
+                                    <ul>
+                                        <li>Loan</li>
+                                        <li>Salary</li>
+                                        <li>Rent</li>
+                                        <li>Utility</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>                          
+                    </div>
+                </div>
+
+                <!------------------- SCENARIO POP FORM STARTS HERE ------------------->
+                <div class="modal ScenarioPop">
+                    <div class="scenario-container">
+                        <div class="scenario-header">
+                            <h2 class="scenario-h2">SCENARIO PREDICTION</h2>
+                            <button id="closeScene" type="button" onclick="closeScenario()" style="border-radius: 50%; background-color: var(background-color);">
+                                <i class="fa fa-times" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                        <div class="scenario-body">
+                            <label for="description">Description</label>
+                            <input class="loanDescription" type="text" id="description" placeholder="Loan for business growth" />
+                    
+                            <div style="display: flex; gap: 20px;">
+                                <div style="flex: 1;">
+                                    <label for="loanAmount">Loan Amount</label>
+                                    <input class="loanNumbers" type="number" id="loanAmount" placeholder="NGN 0" />
+                                </div>
+                                <div style="flex: 1;">
+                                    <label for="interestRate">Interest Rate</label>
+                                    <input class="loanNumbers" type="number" id="interestRate" placeholder="10%" />
+                                </div>
+                            </div>
+                    
+                            <div style="display: flex; gap: 20px;">
+                                <div style="flex: 1;">
+                                    <label for="repaymentType">Loan Repayment Type</label>
+                                    <select id="repaymentType">
+                                        <option value="weekly">Weekly</option>
+                                        <option value="monthly">Monthly</option>
+                                        <option value="quarterly">Quarterly</option>
+                                    </select>
+                                </div>
+                                <div style="flex: 1;">
+                                    <label for="numPayments">Numbers of payment</label>
+                                    <input class="loanNumbers" type="number" id="numPayments" placeholder="4" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="scenario-footer">
+                            <button type="button">Start Prediction</button>
+                        </div>
+                    </div>    
+                </div>
+                <!------------------- SCENARIO POP FORM ENDS HERE ------------------->
+
+                <!-- End of Predictive Table -->
+                <!-- Download Sales Record -->
+                <div style="cursor: pointer; margin-bottom: 4rem;" class="salesRecord tabcontent hidden" id="Tab3">
+                    <h2>Download Records</h2>
+                    <p class="predicting">Select range and Click on the button below to download records!!!</p>
+                    <br>
+                    <form class="downloadForm downloads" action="GET">
+                        <div class="downloadInput">
+                            <div class="input-place">
+                                <label for="rangeDate1" class="input-place_date">Start Date</label>
+                                <input type="date" id="rangeDate1" name="rangeDate1" class="input" required>
+                            </div>
+                            <div class="input-place">
+                                <label for="rangeDate2" class="input-place_date">End Date</label>
+                                <input type="date" id="rangeDate2" name="rangeDate2" class="input" required>
+                            </div>
+                        </div>
+                        <br><br>
+                        <div class="twoButtons">
+                            <input type="submit" class="pdf" value="Download PDF" onclick="downloadSalesRecordsPDF();">
+                            <input type="submit" class="csv" value="Download CSV" onclick="csvForm();">
+                        </div>
+                    </form>
+                </div>
+                <!-- End of Download Sales Record -->
+                </div>
+            </div>
+
+            <!-- Right Section -->
+            <div class="right-side">
+                <div class="nav">
+                    <div class="right-corner">
+                        <a onclick="goHome(); return false">
+                            <div class="logo">
+                                <h2><b class="color2">Insanj</b></h2>
+                                <img src="images/logoBox.png">
+                            </div>
+                        </a>
+                    </div>
+                    <div class="menus">
+                        <button class="hideBar">
+                            <span class="fa fa-times hamburger activate"></span>
+                        </button>
+                        <button class="showBar">
+                            <span class="fa fa-bars bars"></span>
+                        </button>
+                    </div>
+                    <div class="innerNav">            
+                        <div class="dark-mode">
+                            <div class="ico">
+                                <span class="material-icons-sharp active">light_mode</span>
+                                <span class="material-icons-sharp">dark_mode</span>
+                            </div>
+                            <div class="ico-letters">
+                                <h3>Themes</h3>
+                            </div>
+                        </div>
+                        <hr class="lines" style="order: 1;">
+                        <div class="inventory" onclick="openInventory(); return false">
+                            <div class="ico">
+                                <span class="material-icons-sharp" style="color: #1B9C85;">library_books</span>
+                            </div>
+                            <div class="ico-letters">
+                                <h3>Inventory</h3>
+                                <span class="text">Monitor your business inventory</span>
+                            </div>
+                        </div>
+                        <hr class="lines">
+                        <script>
+                            function openInventory(){
+                                window.location.href = 'inventory.html';
+                            }
+                        </script>
+                        <div class="notify">
+                            <div class="ico">
+                                <span class="material-icons-sharp" style="color: #1B9C85;">notifications</span>
+                            </div>
+                            <div class="ico-letters">
+                                <h3>Notification</h3>
+                                <span id="alert"></span>
+                            </div>
+                        </div>
+                        <hr class="lines">
+                        <div class="predictor" onclick="openTab(event, 'Tab1'); return false;">
+                            <div class="ico">
+                                <span class="material-icons-sharp" style="color: #c440a7;">online_prediction</span>
+                            </div>
+                            <div class="ico-letters">
+                                <h3>Predictive Analysis</h3>
+                                <span class="text">Forecast future sales and scenarios</span>
+                            </div>
+                        </div>
+                        <hr class="lines">
+                        <div class="copy-write">
+                            <h5>2024 Copyright: Lechi-Tech</h5>
+                        </div>
+                    </div>
+                
+                    <div class="profile">
+                        <div class="about">
+                            <p>Hey, <b>Lechi</b></p>
+                            <small class="admin">Admin</small>
+                        </div>
+                        <div class="displayPic usersDetails">
+                            <img src="images/blank-person-icon-9.jpg">
+                        </div>
+                    </div>
+                </div>                
+                
+                <div class="details usersDetails">
+                    <div class="user-profile">
+                        <div class="profile_image photo">
+                            <input type="file" class="image_file" id="uploadInput" onchange="updateImage()">
+                        </div>
+                        <div class="profile_names" style="margin-top: 10px;">
+                            <h2>Administrator</h2>
+                            <p>Admin</p>
+                        </div>
+                    </div>
+                    <div class="sidebar">
+                        <a href="#" onclick="openProfile(); return false">
+                            <span class="material-icons-sharp">
+                                account_circle</span>
+                            <h3>Profile</h3>
+                        </a>
+                        <a href="#" class="" onclick="openProfile()">
+                            <span class="material-icons-sharp">business</span>
+                            <h3>Business Profile</h3>
+                        </a>
+                        <a href="#account" onclick="openProfile();">
+                            <span class="material-icons-sharp">manage_accounts</span>
+                            <h3>Account</h3>
+                        </a>
+                        <a href="#" onclick="openProfile(); return false">
+                            <span class="material-icons-sharp">notifications</span>
+                            <h3>Notifications</h3>
+                        </a>
+                        <a href="#">
+                            <span class="material-icons-sharp">logout</span>
+                            <h3>Logout</h3>
+                        </a>
+                        <script>
+                            function openProfile(){
+                                window.location.href = 'profile.html';
+                            }
+                            function goHome(){
+                                window.location.href = "index.html";
+                            }
+
+                            // JAVASCRIPT FOR PROFILE PHOTO
+                            function updateImage() {
+                                    var input = document.getElementById('uploadInput');
+                                    var profileImage = document.querySelector('.profile_image');
+
+                                    if (input.files && input.files[0]) {
+                                        var reader = new FileReader();
+
+                                        reader.onload = function (e) {
+                                            profileImage.style.backgroundImage = 'url(' + e.target.result + ')';
+                                        };
+
+                                        reader.readAsDataURL(input.files[0]);
+                                    }
+                                }
+                        </script>
+                    </div>
+                </div>
+                <!-- End of Nav -->
+            </div>
+        
+            <script>
+                document.addEventListener('DOMContentLoaded', function () {
+                    const displayPic = document.querySelector('.displayPic.usersDetails');
+                    const details = document.querySelector('.details');
+        
+                    displayPic.addEventListener('click', function (event) {
+                        details.classList.toggle('active');
+                        event.stopPropagation(); // Prevents the click event from propagating to document
+                    });
+        
+                    // Close details when clicking outside of it
+                    document.addEventListener('click', function (event) {
+                        if (!details.contains(event.target) && !displayPic.contains(event.target)) {
+                            details.classList.remove('active');
+                        }
+                    });
+                });
+            </script>
+            
+            <div class="footer">
+                <div class="foot">
+                    <nav class="footer-nav"> © 2024 Copyright: Lechi-Tech</a></nav>
+                    <a href="#" class="footer-link"><img src="images/Lechi Logo.png" alt="logoImage"></a>
+                </div>
+            </div>
+        </div>
+
+        <script src="js/script.js"></script>
+        <script src="js/slide.js"></script>
+        <script src="js/dlMood.js"></script>
+        <script src="js/preForm-Sales.js"></script>
+        <script src="js/navigator.js"></script>
+    </body>
+</html>

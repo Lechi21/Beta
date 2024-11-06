@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet">
+        <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.css" type="text/css">
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/hammerjs@2.0.8/hammer.min.js"></script>
+        <link rel="stylesheet" href="css/design.css">
+        <link rel="icon" href="images/favicon.png" type="image/png">
+        <title>Insanjo</title>
+    </head>
+    <body>
+        <noscript>
+            <p>This website requires JavaScript. Please enable JavaScript in your browser.</p>
+        </noscript>
+        <div class="container">
+            <!-- Sidebar Section -->
+            <div class="left-side">
+                <div class="corner">
+                    <a onclick="goHome(); return false">
+                        <div class="logo">
+                            <h2><b class="color2">Insanj</b></h2>
+                            <img src="images/logoBox.png">
+                        </div>
+                    </a>
+                </div>
+            <script>
+                function goHome(){
+                    window.location.href = "index.html";
+                }
+            </script>
+            </div>
+
+            <div class="center">
+                <div id="notification" style="display: none; position: fixed; top: 20px; right: 20px; z-index: 9999; background-color: #f0c14b; padding: 10px; border-radius: 5px;">
+                    <span id="notification-message"></span>
+                </div>
+                <br><br><br><br>
+                <div class="top-ventory">
+                    <h1>Inventory</h1>
+                    <div class="top">
+                        <ul class="top-check">
+                            <li><a onclick="goHome(); return false">Home</a></li>
+                            /
+                            <li><a href="#" class="active">Inventory</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <br>
+                <div class="inventor">
+                    <form action="#">
+                        <div class="form-input">
+                            <input type="search" placeholder="Search..." id="search-input">
+                            <button class="search-btn" type="submit"><i class='bx bx-search'></i></button>
+                        </div>
+                        <div class="form-filter" id="filter-select">
+                        </div>
+                        <div class="form-product">
+                            <button class="add" id="add" onclick="togglePopup()">Add Products</button>
+                        </div>
+                        <div class="form-share">
+                            <button class="share" id="share">
+                                <span class="material-icons-sharp" style="font-size: 22px; margin-right: 5px;">
+                                share
+                                </span>
+                                Share
+                            </button>
+                        </div>
+                    </form>
+                </div>
+                
+                <table id="inventory-table" class="inventory-table">
+                    <thead>
+                        <tr>
+                            <!-- <th>S/N</th> -->
+                            <th>IMAGE</th>
+                            <th>ITEM NAME</th>
+                            <th>DESCRIPTION</th>
+                            <th>ON STOCK</th>
+                            <th>STOCK DATE</th>
+                            <th>PURCHASE PRICE</th>
+                            <th>SELLING PRICE</th>
+                        </tr>
+                    </thead>
+                    <tbody id="inventory-list"></tbody>
+                </table>
+
+                <div id="pagination" class="pagination-container"></div>
+                
+                <form class="itemPop" id="itemPage">
+                    <div class="inventory-box" id="inventory-box">
+                        <button id="itemClose" type="button" onclick="togglePopup()" style="border-radius: 50%; background-color: var(background-color);">
+                            <i class="fa fa-times" aria-hidden="true"></i>
+                        </button>
+                        <h3 class="topBox">ADD NEW PRODUCT</h3>
+                        <div class="inputs">
+                            <div class="item-name1">
+                                <h4>Item  Name:</h4>
+                                <input type="text" name="name" placeholder="Enter product name" required /><br>
+                            </div>
+                            <div class="item-name2">
+                                <h4>Description:</h4>
+                                <input type="text" name="description" placeholder="Details about the product" /><br>
+                            </div>
+                        </div>
+                        <div class="inputs">
+                            <div class="item-name1">
+                                <h4>Available Stock:</h4>
+                                <input type="number" name="availableStock" placeholder="100" required /><br>
+                            </div>
+                            <div class="item-name1">
+                                <h4>Stock Date:</h4>
+                                <div id="date" style="margin-top: 1px; border: 1px solid #d2d2d2; border-radius: 2px; width: 88%; height: 28px; align-content: center; font-size: 13px; background: white; color: #201e1e; font-weight: 500; text-align: center;">
+                                </div>
+                            </div>
+                            <div class="item-name1">
+                                <h4>Purchase Price:</h4>
+                                <input type="number" id="purchasePrice" name="purchasePrice" placeholder="Price (each)" required /><br>
+                            </div>
+                            <div class="item-name1">
+                                <h4>Selling Price:</h4>
+                                <input type="number" name="sellingPrice" placeholder="Price (each)" required /><br>
+                            </div>
+                        </div>
+                        <div class="item-image">
+                            <h4>Image</h4>
+                            <p>Please provide clear image for your product</p>
+                            <input type="file" name="productImage" accept="image/*" required>
+                        </div>
+                        <hr>
+                        <div class="insanjo bottom-logo">
+                            <button type="submit" class="submit_item">Add Product</button>
+                            <div class="logo" style="display: flex; align-items: center; margin-left: -10px;">
+                                <img src="images/logoBox.png" style="width: 48px;">
+                                <h2 style="margin-left: -10px;">In<b><span class="color2">sanjo</span></b></h2>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <div class="formOverlay"></div>
+            </div> 
+
+            <!-- Right Section -->
+            <div class="right-side">
+                <div class="nav">
+                    <div class="right-corner">
+                        <a onclick="goHome(); return false">
+                            <div class="logo">
+                                <h2><b class="color2">Insanj</b></h2>
+                                <img src="images/logoBox.png">
+                            </div>
+                        </a>
+                    </div>
+                    <div class="menus">
+                        <button class="hideBar">
+                            <span class="fa fa-times hamburger activate"></span>
+                        </button>
+                        <button class="showBar">
+                            <span class="fa fa-bars bars"></span>
+                        </button>
+                    </div>
+                    <div class="innerNav">            
+                        <div class="dark-mode">
+                            <div class="ico">
+                                <span class="material-icons-sharp active">light_mode</span>
+                                <span class="material-icons-sharp">dark_mode</span>
+                            </div>
+                            <div class="ico-letters">
+                                <h3>Themes</h3>
+                            </div>
+                        </div>
+                        <hr class="lines" style="order: 1;">
+                        <div class="inventory" onclick="openInventory(); return false">
+                            <div class="ico">
+                                <span class="material-icons-sharp" style="color: #1B9C85;">library_books</span>
+                            </div>
+                            <div class="ico-letters">
+                                <h3>Inventory</h3>
+                                <span class="text">Monitor your business inventory</span>
+                            </div>
+                        </div>
+                        <hr class="lines">
+                        <script>
+                            function openInventory(){
+                                window.location.href = 'inventory.html';
+                            }
+                        </script>
+                        <div class="notify">
+                            <div class="ico">
+                                <span class="material-icons-sharp" style="color: #1B9C85;">notifications</span>
+                            </div>
+                            <div class="ico-letters">
+                                <h3>Notification</h3>
+                                <span id="alert"></span>
+                            </div>
+                        </div>
+                        <hr class="lines">
+                        <div class="predictor" onclick="goToPredictor(); return false;">
+                            <div class="ico">
+                                <span class="material-icons-sharp" style="color: #c440a7;">online_prediction</span>
+                            </div>
+                            <div class="ico-letters">
+                                <h3>Predictive Analysis</h3>
+                                <span class="text">Forecast future sales and scenarios</span>
+                            </div>
+                        </div>
+                        <hr class="lines">
+                        <div class="copy-write">
+                            <h5>2024 Copyright: Lechi-Tech</h5>
+                        </div>
+                    </div>
+                
+                    <div class="profile">
+                        <div class="about">
+                            <p>Hey, <b>Lechi</b></p>
+                            <small class="admin">Admin</small>
+                        </div>
+                        <div class="displayPic usersDetails">
+                            <img src="images/blank-person-icon-9.jpg">
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="details usersDetails">
+                    <div class="user-profile">
+                        <div class="profile_image photo">
+                            <input type="file" class="image_file" id="uploadInput" onchange="updateImage()">
+                        </div>
+                        <div class="profile_names" style="margin-top: 10px;">
+                            <h2>Administrator</h2>
+                            <p>Admin</p>
+                        </div>
+                    </div>
+                    <div class="sidebar">
+                        <a href="#" onclick="openProfile(); return false">
+                            <span class="material-icons-sharp">
+                                account_circle</span>
+                            <h3>Profile</h3>
+                        </a>
+                        <a href="#" class="" onclick="openProfile()">
+                            <span class="material-icons-sharp">business</span>
+                            <h3>Business Profile</h3>
+                        </a>
+                        <a href="#account" onclick="openProfile();">
+                            <span class="material-icons-sharp">manage_accounts</span>
+                            <h3>Account</h3>
+                        </a>
+                        <a href="#" onclick="openProfile(); return false">
+                            <span class="material-icons-sharp">notifications</span>
+                            <h3>Notifications</h3>
+                        </a>
+                        <a href="#">
+                            <span class="material-icons-sharp">logout</span>
+                            <h3>Logout</h3>
+                        </a>
+                        <script>
+                            function openProfile(){
+                                window.location.href = 'profile.html';
+                            }
+                            function goHome(){
+                                window.location.href = "index.html";
+                            }
+
+                            // JAVASCRIPT FOR PROFILE PHOTO
+                            function updateImage() {
+                                    var input = document.getElementById('uploadInput');
+                                    var profileImage = document.querySelector('.profile_image');
+
+                                    if (input.files && input.files[0]) {
+                                        var reader = new FileReader();
+
+                                        reader.onload = function (e) {
+                                            profileImage.style.backgroundImage = 'url(' + e.target.result + ')';
+                                        };
+
+                                        reader.readAsDataURL(input.files[0]);
+                                    }
+                                }
+                        </script>
+                    </div>
+                </div>
+                <!-- End of Nav -->
+            </div>
+            <div class="footer" style="position: fixed;">
+                <div class="foot">
+                    <nav class="footer-nav"> © 2024 Copyright: Lechi-Tech</a></nav>
+                    <a href="#" class="footer-link"><img src="images/Lechi Logo.png" alt="logoImage"></a>
+                </div>
+            </div>
+            <script>
+                document.addEventListener('DOMContentLoaded', function () {
+                    const displayPic = document.querySelector('.displayPic.usersDetails');
+                    const details = document.querySelector('.details');
+        
+                    displayPic.addEventListener('click', function (event) {
+                        details.classList.toggle('active');
+                        event.stopPropagation(); // Prevents the click event from propagating to document
+                    });
+        
+                    // Close details when clicking outside of it
+                    document.addEventListener('click', function (event) {
+                        if (!details.contains(event.target) && !displayPic.contains(event.target)) {
+                            details.classList.remove('active');
+                        }
+                    });
+                });
+            </script>
+            <script src="js/inventoryForm.js"></script>
+            <script src="js/inventoryFormSubmission.js"></script>
+            <script src="js/script.js"></script>
+            <script src="js/dlMood.js"></script>
+            <script src="js/navigator.js"></script>
+            <script src="js/date.js"></script>
+        </div>
+    </body>
+</html>
